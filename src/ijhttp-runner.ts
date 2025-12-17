@@ -23,7 +23,7 @@ export class IJHttpRunner {
         if (!target) return;
 
         const environmentFiles = this.findEnvironmentFiles(target.directory);
-        const environmentName = await this.promptForEnvironmentName(environmentFiles);
+        const environmentName = await this.promptForEnvironmentName(environmentFiles, target.directory);
         
         const command = this.buildCommand(target.fileName, environmentFiles, environmentName);
         this.executeInTerminal(command, target.directory);
@@ -61,15 +61,48 @@ export class IJHttpRunner {
         };
     }
 
-    private async promptForEnvironmentName(environmentFiles: EnvironmentFiles): Promise<string | null> {
+    private async promptForEnvironmentName(environmentFiles: EnvironmentFiles, directory: string): Promise<string | null> {
         if (!environmentFiles.public && !environmentFiles.private) {
             return null;
         }
 
-        return await vscode.window.showInputBox({
-            prompt: 'Enter environment name (e.g., dev, prod)',
-            placeHolder: 'dev'
-        }) || null;
+        const availableEnvironments = this.extractAvailableEnvironments(environmentFiles, directory);
+        if (availableEnvironments.length === 0) {
+            return null;
+        }
+
+        const selectedEnvironment = await vscode.window.showQuickPick(availableEnvironments, {
+            placeHolder: 'Select environment',
+            canPickMany: false
+        });
+
+        return selectedEnvironment || availableEnvironments[0];
+    }
+
+    private extractAvailableEnvironments(environmentFiles: EnvironmentFiles, directory: string): string[] {
+        const environments = new Set<string>();
+
+        if (environmentFiles.public) {
+            const publicEnvs = this.readEnvironmentsFromFile(path.join(directory, environmentFiles.public));
+            publicEnvs.forEach(env => environments.add(env));
+        }
+
+        if (environmentFiles.private) {
+            const privateEnvs = this.readEnvironmentsFromFile(path.join(directory, environmentFiles.private));
+            privateEnvs.forEach(env => environments.add(env));
+        }
+
+        return Array.from(environments);
+    }
+
+    private readEnvironmentsFromFile(filePath: string): string[] {
+        try {
+            const fileContent = fs.readFileSync(filePath, 'utf8');
+            const envData = JSON.parse(fileContent);
+            return Object.keys(envData);
+        } catch (error) {
+            return [];
+        }
     }
 
     private buildCommand(fileName: string, environmentFiles: EnvironmentFiles, environmentName: string | null): string {
