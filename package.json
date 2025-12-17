@@ -16,8 +16,21 @@
       {
         "command": "ijhttp-vscode-extension.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "ijhttp-vscode-extension.exec",
+        "title": "Run with ijhttp"
       }
-    ]
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "ijhttp-vscode-extension.exec",
+          "when": "resourceExtname == '.http'",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
