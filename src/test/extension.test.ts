@@ -8,6 +8,13 @@ import * as vscode from 'vscode';
 suite('Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all tests.');
 
+	test('IJHttpRunner class should be instantiable', () => {
+		const IJHttpRunner = require('../ijhttp-runner').IJHttpRunner;
+		const ijhttpRunner = new IJHttpRunner();
+		assert.ok(ijhttpRunner);
+		assert.strictEqual(typeof ijhttpRunner.executeHttpFile, 'function');
+	});
+
 	test('Sample test', () => {
 		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
 		assert.strictEqual(-1, [1, 2, 3].indexOf(0));

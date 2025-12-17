@@ -20,12 +20,15 @@ export class IJHttpRunner {
 
     async executeHttpFile(fileUri?: vscode.Uri): Promise<void> {
         const target = await this.resolveExecutionTarget(fileUri);
-        if (!target) return;
+        if (!target) {
+            return;
+        }
 
         const environmentFiles = this.findEnvironmentFiles(target.directory);
-        const environmentName = await this.promptForEnvironmentName(environmentFiles, target.directory);
+        const availableEnvironments = this.extractAvailableEnvironments(environmentFiles, target.directory);
+        const environmentName = await this.promptForEnvironmentName(availableEnvironments);
         
-        const command = this.buildCommand(target.fileName, environmentFiles, environmentName);
+        const command = this.buildCommand(target.fileName, environmentFiles, environmentName, availableEnvironments.length > 0);
         this.executeInTerminal(command, target.directory);
     }
 
@@ -61,12 +64,7 @@ export class IJHttpRunner {
         };
     }
 
-    private async promptForEnvironmentName(environmentFiles: EnvironmentFiles, directory: string): Promise<string | null> {
-        if (!environmentFiles.public && !environmentFiles.private) {
-            return null;
-        }
-
-        const availableEnvironments = this.extractAvailableEnvironments(environmentFiles, directory);
+    private async promptForEnvironmentName(availableEnvironments: string[]): Promise<string | null> {
         if (availableEnvironments.length === 0) {
             return null;
         }
@@ -105,18 +103,18 @@ export class IJHttpRunner {
         }
     }
 
-    private buildCommand(fileName: string, environmentFiles: EnvironmentFiles, environmentName: string | null): string {
+    private buildCommand(fileName: string, environmentFiles: EnvironmentFiles, environmentName: string | null, hasValidEnvironments: boolean): string {
         const parts = ['ijhttp'];
 
-        if (environmentFiles.public) {
+        if (hasValidEnvironments && environmentFiles.public) {
             parts.push(`--env-file "${environmentFiles.public}"`);
         }
 
-        if (environmentFiles.private) {
+        if (hasValidEnvironments && environmentFiles.private) {
             parts.push(`--private-env-file "${environmentFiles.private}"`);
         }
 
-        if (environmentName && (environmentFiles.public || environmentFiles.private)) {
+        if (environmentName && hasValidEnvironments) {
             parts.push(`--env ${environmentName}`);
         }
 

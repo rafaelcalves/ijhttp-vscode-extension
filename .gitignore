@@ -9,6 +9,9 @@ node_modules/
 # TypeScript build artifacts
 *.tsbuildinfo
 
+# VS Code testing artifacts
+.vscode-test/
+
 # VS Code settings (keep local only)
 .vscode/settings.json
 .vscode/tasks.json
