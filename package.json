@@ -14,10 +14,6 @@
   "contributes": {
     "commands": [
       {
-        "command": "ijhttp-vscode-extension.helloWorld",
-        "title": "Hello World"
-      },
-      {
         "command": "ijhttp-vscode-extension.exec",
         "title": "Run with ijhttp"
       }
