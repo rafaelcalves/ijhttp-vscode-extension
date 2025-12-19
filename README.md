@@ -1,71 +1,231 @@
-# ijhttp-vscode-extension README
+# ijhttp VS Code Extension
 
-This is the README for your extension "ijhttp-vscode-extension". After writing up a brief description, we recommend including the following sections.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![VS Code Marketplace](https://img.shields.io/badge/VS%20Code-Extension-blue)](https://marketplace.visualstudio.com/vscode)
 
-## Features
+> 🔥 **"I won't give up!"** - Channel your inner Saiyan determination while testing HTTP APIs!
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Bring the power of JetBrains' **ijhttp** CLI tool directly into VS Code! This extension provides seamless integration for executing `.http` files with full environment support, making API testing as exciting as a Dragon Ball Z training session! 💪
 
-For example if there is an image subfolder under your extension project workspace:
+## ✨ Features
 
-\!\[feature X\]\(images/feature-x.png\)
+### 🚀 Current Superpowers (v0.0.1)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- **✅ HTTP File Execution**: Right-click any `.http` file and execute it instantly
+- **✅ Environment Detection**: Auto-discovers `http-client.env.json` and `http-client.private.env.json` files
+- **✅ Interactive Environment Selection**: Choose your environment when multiple configurations are available
+- **✅ Terminal Integration**: See real-time execution in VS Code's integrated terminal
+- **✅ Context Menu Support**: Execute files directly from the Explorer panel
+- **✅ Smart Working Directory**: Commands run in the correct file context
 
-## Requirements
+### 🔄 Training for New Transformations (Coming Soon!)
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- [ ] **Individual Request Execution**: Power up single requests within a file
+- [ ] **Syntax Highlighting**: Beautiful `.http` file syntax highlighting
+- [ ] **IntelliSense Support**: Auto-completion for HTTP methods, headers, and more
+- [ ] **Response Visualization**: Format and display HTTP responses beautifully
+- [ ] **Request History**: Track and replay previous executions
+- [ ] **Variable Support**: Enhanced variable resolution and management
+- [ ] **Authentication Helpers**: OAuth, Basic Auth, and JWT assistants
+- [ ] **Request Collections**: Organize your API tests like a true warrior
+- [ ] **Export Capabilities**: Convert to cURL, Postman, and other formats
 
-## Extension Settings
+## 🛠 Requirements
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+This extension enhances your workflow but relies on the official **ijhttp CLI** tool for execution:
 
-For example:
+### Prerequisites
 
-This extension contributes the following settings:
+1. **ijhttp CLI** (Required)
+   ```bash
+   # Install via JetBrains Toolbox or download from:
+   # https://www.jetbrains.com/help/idea/http-client-cli.html
+   
+   # Verify installation:
+   ijhttp --version
+   ```
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+2. **VS Code** version 1.107.0 or higher
 
-## Known Issues
+### System Compatibility
+- ✅ macOS
+- ✅ Windows  
+- ✅ Linux
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## 🚀 Getting Started
 
-## Release Notes
+### Installation
 
-Users appreciate release notes as you update your extension.
+1. Install from the [VS Code Marketplace](https://marketplace.visualstudio.com/vscode) (coming soon!)
+2. Or install from VSIX:
+   ```bash
+   code --install-extension ijhttp-vscode-extension-0.0.1.vsix
+   ```
 
-### 1.0.0
+### Usage
 
-Initial release of ...
+#### Method 1: Context Menu (Easiest!)
+1. Right-click any `.http` file in the Explorer
+2. Select **"Run with ijhttp"**
+3. Choose your environment if prompted
+4. Watch the magic happen in the terminal! ⚡️
 
-### 1.0.1
+#### Method 2: Command Palette
+1. Open a `.http` file
+2. Press `Cmd+Shift+P` (macOS) or `Ctrl+Shift+P` (Windows/Linux)
+3. Type "Run with ijhttp" and select the command
+4. Select your environment and execute!
 
-Fixed issue #.
+### Environment Files
 
-### 1.1.0
+The extension automatically detects JetBrains-style environment files:
 
-Added features X, Y, and Z.
+```
+your-project/
+├── requests.http
+├── http-client.env.json          # Public environment variables
+└── http-client.private.env.json  # Private/sensitive variables (git-ignored)
+```
+
+**Example environment file structure:**
+```json
+{
+  "dev": {
+    "host": "localhost:3000",
+    "token": "dev-token-123"
+  },
+  "staging": {
+    "host": "staging.example.com", 
+    "token": "staging-token-456"
+  },
+  "production": {
+    "host": "api.example.com",
+    "token": "prod-token-789"
+  }
+}
+```
+
+## 🎯 Architecture Philosophy
+
+> **"Every line of code makes you stronger!"** 
+
+This extension follows a **command-driven architecture** with these core principles:
+
+- **🛡 External Tool Dependency**: We enhance UX but respect the ijhttp CLI as the ultimate technique
+- **⚡️ Terminal Transparency**: All executions visible in integrated terminal  
+- **🌍 Environment-Aware**: Full JetBrains environment file support
+- **🔧 Command Pattern**: Clean separation between VS Code integration and execution logic
+- **📁 Smart Resolution**: Automatic working directory and file resolution
+
+## 🧪 Development
+
+### Building from Source
+
+```bash
+# Clone the repository
+git clone https://github.com/rafaelcalves/ijhttp-vscode-extension.git
+cd ijhttp-vscode-extension
+
+# Install dependencies
+npm install
+
+# Compile TypeScript (CRITICAL!)
+npm run compile
+
+# Run tests
+npm test
+
+# Start development with file watching
+npm run watch
+
+# Package for distribution
+npm run vscode:prepublish
+```
+
+### 🔥 Critical Development Rules
+
+1. **ALWAYS compile before testing**: `npm run compile`
+2. **Tests must pass**: `npm test` should be green ✅
+3. **Linting is mandatory**: `npm run lint` must pass
+4. **Follow the Saiyan Code**: Never give up, keep pushing forward! 💪
+
+### Testing
+
+Run the extension in Development Host:
+1. Press `F5` or use "Run Extension" from VS Code
+2. Test with files in `test-workspace/` directory
+3. Verify environment detection and execution
+
+## 📝 Commands
+
+| Command | Description | Keyboard Shortcut |
+|---------|-------------|-------------------|
+| `ijhttp-vscode-extension.exec` | Execute HTTP file with ijhttp | *None (coming soon!)* |
+
+## ⚙️ Extension Settings
+
+Currently, this extension works out-of-the-box with no configuration needed! 🎉
+
+*Future settings coming soon:*
+- Custom ijhttp CLI path
+- Default environment selection
+- Response formatting preferences
+- And much more!
+
+## 🐛 Known Issues
+
+- Individual request execution within files not yet implemented
+- No syntax highlighting for `.http` files yet
+- Response handling is currently terminal-only
+
+> **Remember**: Every bug is just a new challenge to overcome! Keep training and these limitations will become strengths! 💪
+
+## 🗺 Roadmap
+
+### Version 0.1.0 - "Basic Kamehameha"
+- ✅ File execution via context menu
+- ✅ Environment file detection
+- ✅ Terminal integration
+
+### Version 0.2.0 - "Super Saiyan Transformation" 
+- [ ] Individual request execution
+- [ ] Basic syntax highlighting
+- [ ] Response visualization
+
+### Version 0.3.0 - "Ultra Instinct" 
+- [ ] Advanced IntelliSense
+- [ ] Request history
+- [ ] Authentication helpers
+
+### Version 1.0.0 - "Mastered Ultra Instinct"
+- [ ] Full feature parity with JetBrains HTTP Client
+- [ ] Performance optimizations
+- [ ] Advanced debugging support
+
+## 🤝 Contributing
+
+**Channel that Saiyan spirit!** Contributions are welcome and encouraged!
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-new-power`
+3. Make your changes with that unstoppable determination
+4. Run the tests: `npm test`
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/rafaelcalves/ijhttp-vscode-extension/blob/main/LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **JetBrains** for creating the amazing ijhttp CLI tool
+- **VS Code Team** for the incredible extension API
+- **Akira Toriyama** for inspiring us to never give up and always push our limits! 🐉
 
 ---
 
-## Following extension guidelines
+> **"The limits are only in your mind! Keep pushing forward and unlock new levels of API testing power!"** 
+> 
+> *Remember: This extension makes you stronger, but the real power comes from the ijhttp technique itself!* ⚡️🔥
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Happy HTTP Testing!** 🚀

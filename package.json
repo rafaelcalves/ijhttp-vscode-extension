@@ -1,12 +1,35 @@
 {
   "name": "ijhttp-vscode-extension",
-  "displayName": "ijhttp-vscode-extension",
-  "description": "",
+  "displayName": "ijhttp VS Code Extension",
+  "description": "Execute JetBrains ijhttp .http files directly in VS Code with environment support",
   "version": "0.0.1",
+  "publisher": "rafaelcalves",
+  "author": {
+    "name": "Rafael Correa Alves",
+    "email": "rafael.ca.dev@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rafaelcalves/ijhttp-vscode-extension.git"
+  },
+  "homepage": "https://github.com/rafaelcalves/ijhttp-vscode-extension#readme",
+  "bugs": {
+    "url": "https://github.com/rafaelcalves/ijhttp-vscode-extension/issues"
+  },
+  "keywords": [
+    "http",
+    "api",
+    "testing",
+    "ijhttp",
+    "jetbrains",
+    "rest",
+    "client"
+  ],
   "engines": {
     "vscode": "^1.107.0"
   },
   "categories": [
+    "Testing",
     "Other"
   ],
   "activationEvents": [],
