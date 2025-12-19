@@ -34,7 +34,15 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "lint:fix": "eslint src --fix",
+    "test": "vscode-test",
+    "test:watch": "npm run compile && npm run test -- --watch",
+    "run-extension": "npm run compile && code --extensionDevelopmentPath=. --new-window",
+    "pre-commit": "npm run compile && npm run lint && npm run test",
+    "validate": "npm run pre-commit",
+    "dev": "npm run compile && npm run watch",
+    "clean": "rm -rf out",
+    "rebuild": "npm run clean && npm run compile"
   },
   "devDependencies": {
     "@types/vscode": "^1.107.0",
