@@ -60,6 +60,7 @@
     "lint:fix": "eslint src --fix",
     "test": "vscode-test",
     "test:watch": "npm run compile && npm run test -- --watch",
+    "commitlint": "commitlint --edit",
     "run-extension": "npm run compile && code --extensionDevelopmentPath=. --new-window",
     "pre-commit": "npm run compile && npm run lint && npm run test",
     "validate": "npm run pre-commit",
@@ -69,18 +70,20 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@types/vscode": "^1.107.0",
+    "@commitlint/cli": "^20.2.0",
+    "@commitlint/config-conventional": "^20.2.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
     "@types/sinon": "^17.0.3",
-    "typescript-eslint": "^8.48.1",
-    "eslint": "^9.39.1",
-    "typescript": "^5.9.3",
+    "@types/vscode": "^1.107.0",
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2",
-    "sinon": "^19.0.2",
+    "eslint": "^9.39.1",
     "husky": "^9.0.11",
-    "lint-staged": "^15.2.0"
+    "lint-staged": "^15.2.0",
+    "sinon": "^19.0.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1"
   },
   "lint-staged": {
     "src/**/*.{ts,js}": [
